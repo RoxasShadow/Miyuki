@@ -32,7 +32,7 @@ module Miyuki
       @torrents = []
 
       fetch_torrents
-      @torrents.reverse.each { |torrent| Yamazaki.download_torrent(torrent.title, torrent.link) }
+      @torrents.each { |torrent| Yamazaki.download_torrent(torrent.title, torrent.link) }
     end
 
     def fetch_torrents
@@ -40,9 +40,7 @@ module Miyuki
         pattern = pattern_of(series)
         torrents = search(pattern)
 
-        torrents.each do |torrent|
-          @torrents << torrent
-        end
+        @torrents.concat(torrents)
       end
     end
 

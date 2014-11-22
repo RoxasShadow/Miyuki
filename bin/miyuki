@@ -16,7 +16,7 @@
 require 'miyuki'
 
 abort 'Please provide a configuration file.' if ARGV.empty?
-abort 'Given configuration file does not work.' unless File.exists?(ARGV[0])
+abort 'Given configuration file does not exist.' unless File.exists?(ARGV[0])
 
 Miyuki.config = File.expand_path(ARGV[0])
 Miyuki.track!
