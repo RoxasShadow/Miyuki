@@ -9,6 +9,7 @@ Of course, set the watch directory inside the configuration file to the one you'
 How to use
 ----------
 `$ gem install miyuki`
+
 `$ miyuki miyuki.conf`
 
 TODO
