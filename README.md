@@ -1,6 +1,5 @@
-Miyuki
+Miyuki – Non ti lascia mai solo
 ======
-Non ti lascia mai solo.
 
 After having configured the `miyuki.yaml` configuration file, Miyuki lets you to have always the latest episodes of anime you're watching, downloading the episodes whenever they're available on Nyaa.
 
