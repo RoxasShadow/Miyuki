@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 
 gem 'rufus-scheduler'
-gem 'yamazaki', github: 'RoxasShadow/yamazaki'
+gem 'yamazaki', '>= 0.3'
+gem 'foreverb'
