@@ -1,22 +1,35 @@
 #!/usr/bin/env ruby
 ##
-# DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-# Version 2, December 2004
+#            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#                    Version 2, December 2004
 #
 # Everyone is permitted to copy and distribute verbatim or modified
 # copies of this license document, and changing it is allowed as long
 # as the name is changed.
 #
-# DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-# TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+#            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 #
-# 0. You just DO WHAT THE FUCK YOU WANT TO.
+#  0. You just DO WHAT THE FUCK YOU WANT TO.
 ##
 
 require 'miyuki'
+require 'forever'
 
-abort 'Please provide a configuration file.' if ARGV.empty?
-abort 'Given configuration file does not exist.' unless File.exists?(ARGV[0])
+config_file = File.expand_path(ARGV.last) if ARGV.any?
 
-Miyuki.config = File.expand_path(ARGV[0])
-Miyuki.track!
+unless ['kill', 'stop'].include?(ARGV[0])
+  abort 'Please provide a configuration file.' if ARGV.length <= 1
+  abort 'Given configuration file does not exist.' unless File.exists?(config_file)
+end
+
+Forever.run do
+  dir File.expand_path('..', __FILE__)
+  log File.join(dir, '/miyuki.log')
+  pid File.join(dir, '/miyuki.pid')
+
+  before :all do
+    Miyuki.config = config_file
+    Miyuki.track!
+  end
+end

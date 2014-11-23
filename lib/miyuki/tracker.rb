@@ -1,15 +1,15 @@
 ##
-# DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-# Version 2, December 2004
+#            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#                    Version 2, December 2004
 #
 # Everyone is permitted to copy and distribute verbatim or modified
 # copies of this license document, and changing it is allowed as long
 # as the name is changed.
 #
-# DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-# TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+#            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 #
-# 0. You just DO WHAT THE FUCK YOU WANT TO.
+#  0. You just DO WHAT THE FUCK YOU WANT TO.
 ##
 
 module Miyuki
@@ -26,14 +26,14 @@ module Miyuki
       refresh
     end
 
-  private
-
     def refresh
       @torrents = []
 
       fetch_torrents
       @torrents.each { |torrent| Yamazaki.download_torrent(torrent.title, torrent.link) }
     end
+
+  private
 
     def fetch_torrents
       @series.each do |series|
