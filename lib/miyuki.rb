@@ -16,6 +16,7 @@ require 'fileutils'
 require 'yaml'
 require 'rufus-scheduler'
 require 'yamazaki'
+require 'terminal-notifier'
 
 require 'miyuki/tracker'
 require 'miyuki/miyuki'

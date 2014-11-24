@@ -21,7 +21,7 @@ module Miyuki
     def initialize(watch_dir, series)
       Yamazaki.const_set(:WATCH_DIR, watch_dir)
 
-      @series = series
+      @series = series || []
 
       refresh
     end
@@ -40,7 +40,7 @@ module Miyuki
         pattern = pattern_of(series)
         torrents = search(pattern)
 
-        @torrents.concat(torrents)
+        @torrents.concat(torrents.reverse)
       end
     end
 

@@ -18,28 +18,44 @@ module Miyuki
 			@config_file = config_file
 			@config = load_config
 
-			Rufus::Scheduler.singleton.every('10m') { refresh_config! }
+			Rufus::Scheduler.singleton.every('10m') { refresh_config }
 		end
 
 		def track!
-			watch_dir = File.expand_path(@config['configuration']['watchDir'])
+			watch_dir = File.expand_path(@config['watchDir'])
 			FileUtils.mkdir_p(watch_dir) unless File.directory?(watch_dir)
 
 			@tracker = Tracker.new(watch_dir, @config['series'])
+			notify_torrents(@tracker.torrents)
+			# We should find a way to avoid notifications for the torrents that already
+			# exist and will not be downloaded (because of yamazaki).
+			# However, notifications will start only *after* the torrents have been downloaded,
+			# so threads would be cool for this.
 
 			run_scheduler
 		end
 
 	private
 
-		def refresh_config!
+		def refresh_config
 			new_config = load_config
 
 			if @config != new_config
+				notify_configuration
+
 				@config = new_config
 				@scheduler.pause if defined?(@scheduler)
 				track!
 			end
+		end
+
+		def refresh_torrents
+			old_torrents = @tracker.torrents
+
+			@tracker.refresh
+
+			new_torrents = @tracker.torrents - old_torrents
+			notify_torrents(new_torrents)
 		end
 
 		def load_config
@@ -48,19 +64,21 @@ module Miyuki
 
 		def run_scheduler
 			@scheduler = Rufus::Scheduler.new
-			@scheduler.every @config['configuration']['refreshEvery'] do
-			  old_torrents = @tracker.torrents
-
-			  @tracker.refresh
-
-			  new_torrents = @tracker.torrents - old_torrents
-			  if new_torrents.any?
-			    puts 'New torrents:'
-			    new_torrents.each { |torrent| puts torrent.to_s }
-			  end
-			end
-
+			@scheduler.every @config['refreshEvery'] { refresh_torrents }
 			@scheduler.join
+		end
+
+		def notify_torrents(torrents)
+			torrents.each do |torrent|
+				TerminalNotifier.notify(torrent.title, title: 'New episode released', sound: @config['notifications']['sound'])
+				sleep 1.1
+			end if @config['notifications']['enabled']
+		end
+
+		def notify_configuration
+			if @config['notifications']['enabled']
+				TerminalNotifier.notify('New configuration loaded in Miyuki', sound: @config['notifications']['sound'])
+			end
 		end
 	end
 end
