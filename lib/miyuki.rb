@@ -17,6 +17,12 @@ require 'yaml'
 require 'rufus-scheduler'
 require 'yamazaki'
 
+require 'miyuki/notifier'
 require 'miyuki/tracker'
 require 'miyuki/miyuki'
 require 'miyuki/version'
+
+case RUBY_PLATFORM
+  when /darwin/ then require 'miyuki/notifiers/terminal-notifier.rb'
+  when /linux/  then require 'miyuki/notifiers/libnotify.rb'
+end

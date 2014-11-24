@@ -13,54 +13,73 @@
 ##
 
 module Miyuki
-	class << self
-		def config=(config_file)
-			@config_file = config_file
-			@config = load_config
+  class << self
+    def config=(config_file)
+      @notifier = Notifier.new
 
-			Rufus::Scheduler.singleton.every('10m') { refresh_config! }
-		end
+      @config_file = config_file
+      @config = load_config
 
-		def track!
-			watch_dir = File.expand_path(@config['configuration']['watchDir'])
-			FileUtils.mkdir_p(watch_dir) unless File.directory?(watch_dir)
+      # TODO: Implement file watcher
+      Rufus::Scheduler.singleton.every('1m') { refresh_config }
+    end
 
-			@tracker = Tracker.new(watch_dir, @config['series'])
+    def track!
+      watch_dir = File.expand_path(@config['watchDir'])
+      FileUtils.mkdir_p(watch_dir) unless File.directory?(watch_dir)
 
-			run_scheduler
-		end
+      # TODO: #deep_dup instead of using Marshal
+      @tracker = Tracker.new(watch_dir, Marshal.load(Marshal.dump(@config))['series']) do |torrent|
+        notify_torrents(torrent)
+      end
 
-	private
+      run_scheduler
+    end
 
-		def refresh_config!
-			new_config = load_config
+  private
 
-			if @config != new_config
-				@config = new_config
-				@scheduler.pause if defined?(@scheduler)
-				track!
-			end
-		end
+    def refresh_config
+      new_config = load_config
 
-		def load_config
-			YAML.load(File.read(@config_file))
-		end
+      if @config != new_config
+        notify_configuration
 
-		def run_scheduler
-			@scheduler = Rufus::Scheduler.new
-			@scheduler.every @config['configuration']['refreshEvery'] do
-			  old_torrents = @tracker.torrents
+        @config = new_config
+        @scheduler.pause if defined?(@scheduler)
+        track!
+      end
+    end
 
-			  @tracker.refresh
+    def refresh_torrents
+      old_torrents = @tracker.torrents
 
-			  new_torrents = @tracker.torrents - old_torrents
-			  if new_torrents.any?
-			    puts 'New torrents:'
-			    new_torrents.each { |torrent| puts torrent.to_s }
-			  end
-			end
+      @tracker.refresh
 
-			@scheduler.join
-		end
-	end
+      new_torrents = @tracker.remove_duplicates(old_torrents)
+      new_torrents.each { |torrent| notify_torrents(new_torrents) }
+    end
+
+    def load_config
+      YAML.load(File.read(@config_file))
+    end
+
+    def run_scheduler
+      @scheduler = Rufus::Scheduler.new
+      @scheduler.every @config['refreshEvery'] { refresh_torrents }
+      @scheduler.join
+    end
+
+    def notify_torrents(torrent)
+      if @config['notifications']['enabled']
+        @notifier.notify(torrent.title, 'New episode released')
+        sleep 1.1
+      end
+    end
+
+    def notify_configuration
+      if @config['notifications']['enabled']
+        @notifier.notify('New configuration loaded in Miyuki', 'Changes detected in configuration file')
+      end
+    end
+  end
 end

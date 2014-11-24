@@ -18,10 +18,12 @@ module Miyuki
 
     attr_reader :torrents
 
-    def initialize(watch_dir, series)
+    def initialize(watch_dir, series, &callback)
+      # TODO: This will raise a warning when the class is initializated twice
       Yamazaki.const_set(:WATCH_DIR, watch_dir)
 
-      @series = series
+      @series   = series || []
+      @callback = callback if block_given?
 
       refresh
     end
@@ -30,17 +32,34 @@ module Miyuki
       @torrents = []
 
       fetch_torrents
-      @torrents.each { |torrent| Yamazaki.download_torrent(torrent.title, torrent.link) }
+
+      @torrents.each do |torrent|
+        existed = File.exists?("#{Yamazaki::WATCH_DIR}/#{torrent.title}.torrent")
+        Yamazaki.download_torrent(torrent.title, torrent.link)
+        downloaded = !existed && File.exists?("#{Yamazaki::WATCH_DIR}/#{torrent.title}.torrent")
+
+        # TODO: `downloaded` should be returned by Yamazaki natively
+        @callback.call(torrent) if downloaded && @callback
+      end
+    end
+
+    # TODO: Refactor
+    def remove_duplicates(other_torrents)
+      @torrents.delete_if do |torrent|
+        other_torrents.each do |other_torrent|
+          return true if torrent.link == other_torrent.link
+        end
+      end
     end
 
   private
 
     def fetch_torrents
       @series.each do |series|
-        pattern = pattern_of(series)
+        pattern  = pattern_of(series)
         torrents = search(pattern)
 
-        @torrents.concat(torrents)
+        @torrents.concat(torrents.reverse)
       end
     end
 

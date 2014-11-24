@@ -11,7 +11,12 @@
 #
 #  0. You just DO WHAT THE FUCK YOU WANT TO.
 ##
+require 'terminal-notifier'
 
 module Miyuki
-  VERSION = '0.3'
+  class TerminalNotifier
+    def notify(title, message)
+      ::TerminalNotifier.notify(message, title: title, sound: 'default')
+    end
+  end
 end
