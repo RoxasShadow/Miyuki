@@ -5,6 +5,12 @@ After having configured the `example/miyuki.conf` configuration file, Miyuki let
 
 Of course, set the watch directory inside the configuration file to the one you've set in your torrent client.
 
+Features
+--------
+- After having launched the daemon, changes to the configuration file will be always syncronized without having restart Miyuki
+- Whenever Miyuki finds out a new episode to download, you'll be notified with an alert
+- Miyuki gives you a powerful way to search anime series through patterns
+
 How to use
 ----------
 `$ gem install miyuki`

@@ -77,7 +77,7 @@ module Miyuki
 
 		def notify_configuration
 			if @config['notifications']['enabled']
-				TerminalNotifier.notify('New configuration loaded in Miyuki', sound: @config['notifications']['sound'])
+				TerminalNotifier.notify('New configuration loaded in Miyuki', title: 'Change detected in configuration file', sound: @config['notifications']['sound'])
 			end
 		end
 	end
