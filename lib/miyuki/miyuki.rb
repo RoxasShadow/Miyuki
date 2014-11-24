@@ -28,9 +28,10 @@ module Miyuki
 			@tracker = Tracker.new(watch_dir, @config['series'])
 			notify_torrents(@tracker.torrents)
 			# We should find a way to avoid notifications for the torrents that already
-			# exist and will not be downloaded (because of yamazaki).
-			# However, notifications will start only *after* the torrents have been downloaded,
-			# so threads would be cool for this.
+			# exist and will not be downloaded (because of yamazaki) otherwise at every
+			# refresh it will notify every torrent it has found.
+			# However, notifications will start only *after* the torrents have been
+			# downloaded, so threads would be cool for this.
 
 			run_scheduler
 		end
