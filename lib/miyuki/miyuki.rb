@@ -22,8 +22,7 @@ module Miyuki
 		end
 
 		def track!
-                        puts @config
-			watch_dir = File.expand_path(@config['configuration']['watchDir'])
+			watch_dir = File.expand_path(@config['watchDir'])
 			FileUtils.mkdir_p(watch_dir) unless File.directory?(watch_dir)
 
 			@tracker = Tracker.new(watch_dir, @config['series'])
@@ -61,7 +60,20 @@ module Miyuki
 		end
 
 		def load_config
-			YAML.load(File.read(@config_file))
+                        #support older configuration files that does not have "notification" section
+			parsedConfig = YAML.load(File.read(@config_file))
+
+                        unless parsedConfig['notifications'] then
+                          parsedConfig['notifications'] = {'enabled' => false, 'sound' => 'default'}
+                        end
+                        unless parsedConfig['watchDir'] then
+                          parsedConfig['watchDir'] = parsedConfig['configuration']['watchDir']
+                        end
+                        unless parsedConfig['refreshEvery'] then
+                          parsedConfig['refreshEvery'] = parsedConfig['configuration']['refreshEvery']
+                        end
+
+                        return parsedConfig
 		end
 
 		def run_scheduler
