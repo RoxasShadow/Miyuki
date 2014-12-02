@@ -22,7 +22,8 @@ module Miyuki
 		end
 
 		def track!
-			watch_dir = File.expand_path(@config['watchDir'])
+                        puts @config
+			watch_dir = File.expand_path(@config['configuration']['watchDir'])
 			FileUtils.mkdir_p(watch_dir) unless File.directory?(watch_dir)
 
 			@tracker = Tracker.new(watch_dir, @config['series'])
