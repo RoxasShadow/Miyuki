@@ -45,4 +45,5 @@ module Miyuki
       #TODO: check if you can use sounds in Libnotify
       Libnotify.show(:body => message, :summary => title)
     end
+  end
 end
