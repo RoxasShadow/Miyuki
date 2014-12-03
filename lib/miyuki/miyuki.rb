@@ -18,6 +18,8 @@ module Miyuki
 			@config_file = config_file
 			@config = load_config
 
+                        @notifier = Notifier.new().getNotifier()
+
 			Rufus::Scheduler.singleton.every('10m') { refresh_config }
 		end
 
@@ -84,14 +86,16 @@ module Miyuki
 
 		def notify_torrents(torrents)
 			torrents.each do |torrent|
-				TerminalNotifier.notify(torrent.title, title: 'New episode released', sound: @config['notifications']['sound'])
+				#TerminalNotifier.notify(torrent.title, title: 'New episode released', sound: @config['notifications']['sound'])
+                                @notifier.notify(torrent.title, 'New episode released', @config['notifications']['sound'])
 				sleep 1.1
 			end if @config['notifications']['enabled']
 		end
 
 		def notify_configuration
 			if @config['notifications']['enabled']
-				TerminalNotifier.notify('New configuration loaded in Miyuki', title: 'Change detected in configuration file', sound: @config['notifications']['sound'])
+				#TerminalNotifier.notify('New configuration loaded in Miyuki', title: 'Change detected in configuration file', sound: @config['notifications']['sound'])
+                                @notifier.notify('New configuration loaded in Miyuki', 'Change detected in configuration file', @config['notifications']['sound'])
 			end
 		end
 	end

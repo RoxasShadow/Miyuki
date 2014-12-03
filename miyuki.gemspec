@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
 	s.add_dependency 'rufus-scheduler',   '~> 3.0'
 	s.add_dependency 'foreverb',          '~> 0.3'
 	s.add_dependency 'terminal-notifier', '~> 1.6'
+        s.add_dependency 'libnotify',         '~> 0.8'
 end
