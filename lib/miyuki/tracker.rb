@@ -33,6 +33,25 @@ module Miyuki
       @torrents.each { |torrent| Yamazaki.download_torrent(torrent.title, torrent.link) }
     end
 
+    def diff_with(other_torrents)
+      #TODO: actually, it may be better to implement == in Yamazaki torrents and drop this function.
+      def compare_torrents(a_torrent, b_torrent)
+        a_torrent.title       == b_torrent.title       &&
+        a_torrent.description == b_torrent.description &&
+        a_torrent.link        == b_torrent.link        &&
+        a_torrent.pub_date     == b_torrent.pub_date
+      end
+      @torrents.select { |torrent| 
+        found = false
+        other_i = 0
+        while not found
+          found = compare_torrents(torrent, other_torrents[other_i])
+          other_i += 1
+        end
+        not found
+      }
+    end
+
   private
 
     def fetch_torrents

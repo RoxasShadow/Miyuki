@@ -57,7 +57,10 @@ module Miyuki
 
 			@tracker.refresh
 
-			new_torrents = @tracker.torrents - old_torrents
+                        #TODO: restore this line (and delete @tracker#diff_with call) when
+                        #      Yamazaki::Torrent comparison is implemented.
+			#new_torrents = @tracker.torrents - old_torrents
+                        new_torrents = @tracker.diff_with(old_torrents)
 			notify_torrents(new_torrents)
 		end
 
@@ -86,7 +89,6 @@ module Miyuki
 
 		def notify_torrents(torrents)
 			torrents.each do |torrent|
-				#TerminalNotifier.notify(torrent.title, title: 'New episode released', sound: @config['notifications']['sound'])
                                 @notifier.notify(torrent.title, 'New episode released', @config['notifications']['sound'])
 				sleep 1.1
 			end if @config['notifications']['enabled']
@@ -94,7 +96,6 @@ module Miyuki
 
 		def notify_configuration
 			if @config['notifications']['enabled']
-				#TerminalNotifier.notify('New configuration loaded in Miyuki', title: 'Change detected in configuration file', sound: @config['notifications']['sound'])
                                 @notifier.notify('New configuration loaded in Miyuki', 'Change detected in configuration file', @config['notifications']['sound'])
 			end
 		end
