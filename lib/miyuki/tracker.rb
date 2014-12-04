@@ -39,9 +39,9 @@ module Miyuki
         a_torrent.title       == b_torrent.title       &&
         a_torrent.description == b_torrent.description &&
         a_torrent.link        == b_torrent.link        &&
-        a_torrent.pub_date     == b_torrent.pub_date
+        a_torrent.pub_date    == b_torrent.pub_date
       end
-      @torrents.select { |torrent| 
+      @torrents.select { |torrent|
         found = false
         other_i = 0
         while not found
