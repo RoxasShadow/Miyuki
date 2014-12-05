@@ -17,9 +17,23 @@ module Miyuki
     
     def initialize
     end
-    
+   
+    #based https://github.com/copiousfreetime/launchy/blob/master/lib/launchy/detect/host_os_family.rb
+    def OS
+      host_os = ::RbConfig::CONFIG['host_os']
+      if host_os =~ /(mingw|mswin|windows|cygwin)/i
+        return 'WINDOWS'
+      elsif host_os =~ /(darwin|mac os)/i
+        return 'MAC'
+      elsif host_os =~ /(linux)/i
+        return 'LINUX'
+      else
+        return 'UNKNOWN'
+      end
+    end
+ 
     def getNotifier
-      operating_system = 'LINUX'
+      operating_system = self.OS()
       if operating_system == 'MAC'
         return MacNotifier.new()
       elsif operating_system == 'LINUX'
@@ -34,16 +48,24 @@ module Miyuki
   end
   
 
-  class MacNotifier
+  class MacNotifier < Notifier
     def notify(title, message, sound)
       TerminalNotifier.notify(message, title: title, sound: sound)
     end
+
+    def getNotifier
+      self
+    end
   end
 
-  class LinuxNotifier
+  class LinuxNotifier < Notifier
     def notify(title, message, sound)
       #TODO: check if you can use sounds in Libnotify
       Libnotify.show(:body => message, :summary => title)
+    end
+
+    def getNotifier
+      self
     end
   end
 end

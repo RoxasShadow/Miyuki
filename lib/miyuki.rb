@@ -18,6 +18,7 @@ require 'rufus-scheduler'
 require 'yamazaki'
 require 'terminal-notifier'
 require 'libnotify'
+require 'rbconfig'
 
 require 'miyuki/notifier'
 require 'miyuki/tracker'
