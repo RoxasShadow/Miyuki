@@ -18,7 +18,7 @@ module Miyuki
 			@config_file = config_file
 			@config = load_config
 
-                        @notifier = Notifier.new().getNotifier()
+                        @notifier = Notifier.getNotifier
 
 			Rufus::Scheduler.singleton.every('10m') { refresh_config }
 		end

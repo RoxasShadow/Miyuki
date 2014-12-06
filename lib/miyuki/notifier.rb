@@ -19,7 +19,7 @@ module Miyuki
     end
    
     #based https://github.com/copiousfreetime/launchy/blob/master/lib/launchy/detect/host_os_family.rb
-    def OS
+    def self.OS
       host_os = ::RbConfig::CONFIG['host_os']
       if host_os =~ /(mingw|mswin|windows|cygwin)/i
         return 'WINDOWS'
@@ -32,7 +32,7 @@ module Miyuki
       end
     end
  
-    def getNotifier
+    def self.getNotifier
       operating_system = self.OS()
       if operating_system == 'MAC'
         return MacNotifier.new()
