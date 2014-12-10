@@ -23,5 +23,6 @@ Known bugs
 - Nisekoi BDs in `example/miyuki.conf` are downloaded both in 720p and 1080p
 
 Contributors
+------------
 - [alfateam123](https://github.com/alfateam123) — notifications
 
