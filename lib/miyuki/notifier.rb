@@ -13,5 +13,22 @@
 ##
 
 module Miyuki
-  VERSION = '0.3'
+  class Notifier
+    def initialize(notifier = nil)
+      @notifier = notifier || get_notifier
+    end
+
+    def notify(title, message)
+      @notifier.notify(title, message)
+    end
+
+  private
+
+    def get_notifier
+      case RUBY_PLATFORM
+        when /darwin/ then Miyuki::TerminalNotifier.new
+        when /linux/  then Miyuki::Libnotify.new
+      end
+    end
+  end
 end

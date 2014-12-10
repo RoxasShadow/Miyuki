@@ -11,7 +11,12 @@
 #
 #  0. You just DO WHAT THE FUCK YOU WANT TO.
 ##
+require 'libnotify'
 
 module Miyuki
-  VERSION = '0.3'
+  class Libnotify
+    def notify(title, message)
+      ::Libnotify.show(body: message, summary: title)
+    end
+  end
 end
