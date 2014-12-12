@@ -1,2 +1,5 @@
 *.gem
-TODO
+*.pid
+*.log
+bin/tmp/
+features/support/testWatchDir/

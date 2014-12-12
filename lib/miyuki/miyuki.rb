@@ -14,6 +14,9 @@
 
 module Miyuki
   class << self
+    attr_reader :config, :config_file
+    attr_accessor :join_scheduler
+
     def config=(config_file)
       @notifier = Notifier.new
 
@@ -26,15 +29,17 @@ module Miyuki
     end
 
     def track!
+      raise Exception, 'You have to provide a proper configuration file to start the tracking.' unless @config
+
       watch_dir = File.expand_path(@config['watchDir'])
-      FileUtils.mkdir_p(watch_dir) unless File.directory?(watch_dir)
+      FileUtils.mkdir_p(watch_dir) unless Dir.exists?(watch_dir)
 
       config = DeepClone.clone(@config)
       @tracker = Tracker.new(watch_dir, config['series']) do |torrent|
         notify_torrents(torrent)
       end
 
-      run_scheduler
+      run_scheduler!
     end
 
   private
@@ -46,7 +51,6 @@ module Miyuki
         notify_configuration
 
         @config = new_config
-        @scheduler.pause if defined?(@scheduler)
         track!
       end
     end
@@ -55,19 +59,22 @@ module Miyuki
       old_torrents = @tracker.torrents
 
       @tracker.refresh
+      @tracker.remove_duplicates(old_torrents)
 
-      new_torrents = @tracker.remove_duplicates(old_torrents)
-      new_torrents.each { |torrent| notify_torrents(new_torrents) }
+      new_torrents = @tracker.torrents
+      new_torrents.each { |new_torrent| notify_torrents(new_torrent) }
     end
 
     def load_config
       YAML.load(File.read(@config_file))
     end
 
-    def run_scheduler
-      @scheduler = Rufus::Scheduler.new
-      @scheduler.every @config['refreshEvery'] { refresh_torrents }
-      @scheduler.join
+    def run_scheduler!
+      @scheduled_job.kill if @scheduled_job
+
+      scheduler = Rufus::Scheduler.new
+      @scheduled_job = scheduler.schedule_every @config['refreshEvery'] { refresh_torrents }
+      scheduler.join if @join_scheduler != false
     end
 
     def notify_torrents(torrent)

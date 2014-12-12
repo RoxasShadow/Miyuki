@@ -7,3 +7,6 @@ gem 'terminal-notifier'
 gem 'libnotify'
 gem 'filewatcher'
 gem 'ruby_deep_clone'
+
+gem 'cucumber'
+gem 'rspec'
