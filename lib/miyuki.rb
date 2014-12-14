@@ -17,6 +17,7 @@ require 'yaml'
 require 'rufus-scheduler'
 require 'yamazaki'
 require 'filewatcher'
+require 'ruby_deep_clone'
 
 require 'miyuki/notifier'
 require 'miyuki/tracker'

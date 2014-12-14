@@ -29,8 +29,8 @@ module Miyuki
       watch_dir = File.expand_path(@config['watchDir'])
       FileUtils.mkdir_p(watch_dir) unless File.directory?(watch_dir)
 
-      # TODO: #deep_dup instead of using Marshal
-      @tracker = Tracker.new(watch_dir, Marshal.load(Marshal.dump(@config))['series']) do |torrent|
+      config = DeepClone.clone(@config)
+      @tracker = Tracker.new(watch_dir, config['series']) do |torrent|
         notify_torrents(torrent)
       end
 
