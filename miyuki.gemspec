@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'yamazaki',        '~> 0.3'
   s.add_dependency 'rufus-scheduler', '~> 3.0'
   s.add_dependency 'foreverb',        '~> 0.3'
+  s.add_dependency 'filewatcher',     '~> 0.3'
 
   case RUBY_PLATFORM
     when /darwin/ then s.add_dependency 'terminal-notifier', '~> 1.6'
