@@ -19,7 +19,11 @@ module Miyuki
     end
 
     def notify(title, message)
-      @notifier.notify(title, message)
+      @notifier.notify(title, message) if has_notifier?
+    end
+
+    def has_notifier?
+      !!@notifier
     end
 
   private
