@@ -11,6 +11,7 @@ GEM
       thor (>= 0.15.0)
     libnotify (0.8.4)
       ffi (>= 1.0.11)
+    ruby_deep_clone (0.6.0)
     rufus-scheduler (3.0.9)
       tzinfo
     terminal-notifier (1.6.2)
@@ -29,6 +30,7 @@ DEPENDENCIES
   filewatcher
   foreverb
   libnotify
+  ruby_deep_clone
   rufus-scheduler
   terminal-notifier
   yamazaki (>= 0.3)
