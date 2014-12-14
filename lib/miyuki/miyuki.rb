@@ -20,8 +20,9 @@ module Miyuki
       @config_file = config_file
       @config = load_config
 
-      # TODO: Implement file watcher
-      Rufus::Scheduler.singleton.every('1m') { refresh_config }
+      Thread.new do
+        FileWatcher.new([config_file]).watch { refresh_config }
+      end
     end
 
     def track!

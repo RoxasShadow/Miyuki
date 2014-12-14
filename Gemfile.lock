@@ -4,13 +4,19 @@ GEM
     color (1.7.1)
     colorb (0.0.9)
       color
+    ffi (1.9.6)
+    filewatcher (0.3.5)
+      trollop (~> 2.0)
     foreverb (0.3.2)
       thor (>= 0.15.0)
+    libnotify (0.8.4)
+      ffi (>= 1.0.11)
     rufus-scheduler (3.0.9)
       tzinfo
     terminal-notifier (1.6.2)
     thor (0.19.1)
     thread_safe (0.3.4)
+    trollop (2.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     yamazaki (0.3)
@@ -20,7 +26,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  filewatcher
   foreverb
+  libnotify
   rufus-scheduler
   terminal-notifier
   yamazaki (>= 0.3)
