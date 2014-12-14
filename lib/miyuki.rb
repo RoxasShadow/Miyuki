@@ -27,4 +27,5 @@ require 'miyuki/version'
 case RUBY_PLATFORM
   when /darwin/ then require 'miyuki/notifiers/terminal-notifier.rb'
   when /linux/  then require 'miyuki/notifiers/libnotify.rb'
+  when /mswin|msys|mingw|cygwin/ then require 'miyuki/notifiers/notifu.rb'
 end
