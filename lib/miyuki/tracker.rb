@@ -42,11 +42,8 @@ module Miyuki
       fetch_torrents
 
       @torrents.each do |torrent|
-        existed = File.exists?("#{Yamazaki::WATCH_DIR}/#{torrent.title}.torrent")
-        Yamazaki.download_torrent(torrent.title, torrent.link)
-        downloaded = !existed && File.exists?("#{Yamazaki::WATCH_DIR}/#{torrent.title}.torrent")
+        downloaded = Yamazaki.download_torrent(torrent.title, torrent.link)
 
-        # TODO: `downloaded` should be returned by Yamazaki natively
         @callback.call(torrent) if downloaded && @callback
       end
     end
