@@ -7,7 +7,7 @@ Of course, remember set the watch directory inside the configuration file (`exam
 Features
 --------
 - After having launched the daemon, the changes to the configuration file will be always syncronized without having to restart Miyuki
-- Whenever Miyuki finds out a new episode to download, you'll be notified with a system alert (compatible with OSX natively and with Linux installing `libnotify`)
+- Whenever Miyuki finds out a new episode to download, you'll be notified with a system alert (compatible with OSX and Windows natively and with Linux installing `libnotify`)
 - Miyuki gives you a powerful way to search anime series through patterns
 
 How to use
