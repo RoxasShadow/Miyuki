@@ -2,6 +2,13 @@ require 'miyuki'
 require 'rspec'
 require 'fileutils'
 
+class String
+  def contains?(string)
+    string.split.each { |w| return false if not self.include?(w) }
+    true
+  end
+end
+
 Miyuki.join_scheduler = false
 
 After do |s|

@@ -20,6 +20,7 @@ require 'filewatcher'
 require 'deep_clone'
 
 require 'miyuki/notifier'
+require 'miyuki/parser'
 require 'miyuki/tracker'
 require 'miyuki/miyuki'
 require 'miyuki/version'

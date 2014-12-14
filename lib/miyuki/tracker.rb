@@ -39,7 +39,7 @@ module Miyuki
     def refresh
       @torrents = []
 
-      fetch_torrents
+      fetch_torrents!
 
       @torrents.each do |torrent|
         downloaded = Yamazaki.download_torrent(torrent.title, torrent.link)
@@ -58,23 +58,18 @@ module Miyuki
 
   private
 
-    def fetch_torrents
+    def fetch_torrents!
       @series.each do |series|
-        pattern  = pattern_of(series)
-        torrents = search(pattern)
+        query = URI.encode_www_form_component(Parser.parse(series)) # TODO: move encode to yamazaki?
+        torrents = search(query)
+
+        episodes = series['episodes']
+        if episodes && episodes['from']
+          Parser.filter_episodes!(torrents, episodes['from'], !!episodes['skipIfNotSure'])
+        end
 
         @torrents.concat(torrents.reverse)
       end
-    end
-
-    def pattern_of(series)
-      pattern = series.fetch('pattern', '[$fansub] $name')
-
-      pattern.scan(/\$[a-zA-Z_]*/).each do |var|
-        pattern.gsub!(var, series[var[1..-1]]) if series.has_key?(var[1..-1])
-      end
-
-      pattern
     end
   end
 end

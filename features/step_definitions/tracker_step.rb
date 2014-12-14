@@ -2,30 +2,59 @@ And(/I wait (\d+) seconds?/) do |seconds|
   sleep seconds.to_f
 end
 
-Then(/I have almost (\d+) torrent files? containing "(.*?)"/) do |count, string|
+Then(/I have almost (\d+) torrent files? containing "(.+)"/) do |count, string|
   watch_dir = Miyuki.config['watchDir']
-  torrent_files = Dir["#{watch_dir}/*.torrent"].select { |f| f.include?(string) }
+  torrent_files = Dir["#{watch_dir}/*.torrent"].select { |f| f.contains?(string) }
 
   expect(torrent_files.count).to be >= count.to_i
 end
 
-And(/I have almost (\d+) torrent files? that do not contain "(.*?)"/) do |count, string|
+And(/I have almost (\d+) torrent files? that do not contain "(.+)"/) do |count, string|
   watch_dir = Miyuki.config['watchDir']
-  torrent_files = Dir["#{watch_dir}/*.torrent"].reject { |f| f.include?(string) }
+  torrent_files = Dir["#{watch_dir}/*.torrent"].reject { |f| f.contains?(string) }
 
   expect(torrent_files.count).to be >= count.to_i
 end
 
-And(/there are (\d+) torrent files? containing "(.*?)"/) do |count, string|
+And(/I have not the episodes? (.+) of "(.+)"/) do |episodes, string|
   watch_dir = Miyuki.config['watchDir']
-  torrent_files = Dir["#{watch_dir}/*.torrent"].select { |f| f.include?(string) }
+  torrent_files = Dir["#{watch_dir}/*.torrent"].select { |f| f.contains?(string) }
+
+  episodes = episodes.split(',').map(&:to_i)
+
+  torrent_files.select! do |f|
+    episode = f.scan(/- [0-9]*\.?[0-9]+/).flatten.last.to_i
+    episodes.include?(episode)
+  end
+
+  expect(torrent_files.empty?).to be_truthy
+end
+
+And(/I have the episodes? (.+) of "(.+)"/) do |episodes, string|
+  watch_dir = Miyuki.config['watchDir']
+  torrent_files = Dir["#{watch_dir}/*.torrent"].select { |f| f.contains?(string) }
+  torrent_files_count = torrent_files.length
+
+  episodes = episodes.split(',').map(&:to_i)
+
+  torrent_files.select! do |f|
+    episode = f.scan(/- [0-9]*\.?[0-9]+/).flatten.last.to_i
+    episodes.include?(episode)
+  end
+
+  expect(torrent_files.length).to_not be torrent_files_count
+end
+
+And(/there are (\d+) torrent files? containing "(.+)"/) do |count, string|
+  watch_dir = Miyuki.config['watchDir']
+  torrent_files = Dir["#{watch_dir}/*.torrent"].select { |f| f.contains?(string) }
 
   expect(torrent_files.count).to be count.to_i
 end
 
-And(/there are (\d+) torrent files? that do not contain "(.*?)"/) do |count, string|
+And(/there are (\d+) torrent files? that do not contain "(.+)"/) do |count, string|
   watch_dir = Miyuki.config['watchDir']
-  torrent_files = Dir["#{watch_dir}/*.torrent"].reject { |f| f.include?(string) }
+  torrent_files = Dir["#{watch_dir}/*.torrent"].reject { |f| f.contains?(string) }
 
   expect(torrent_files.count).to be count.to_i
 end

@@ -7,9 +7,11 @@ Feature: Download new episodes
     When I set the configuration file path to "features/support/miyuki.conf"
     And  I invoke "track!"
     And  I wait 5 seconds to let Miyuki to find and download the episodes
-    Then I have almost 2 torrent files containing "BD"
-    And  I have almost 12 torrent file that do not contain "BD"
-    And  there are 0 torrent files containing "BD 720p"
+    Then I have almost 2 torrent files containing "Nisekoi BD"
+    And  I have almost 4 torrent files that do not contain "BD Nisekoi"
+    And  I have not the episodes 1, 4, 8 of "Mekakucity"
+    And  I have the episode 9, 10 of "Mekakucity"
+    And  there are 0 torrent files containing "Nisekoi 720p"
     And  there are 0 torrent files that do not contain "[Commie]"
 
   Scenario: Episodes already downloaded are ignored
