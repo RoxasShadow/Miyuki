@@ -28,6 +28,14 @@ module Miyuki
       refresh
     end
 
+    def for_every_torrent(&callback)
+      if block_given?
+        @callback = callback
+      else
+        yield
+      end
+    end
+
     def refresh
       @torrents = []
 
@@ -43,7 +51,6 @@ module Miyuki
       end
     end
 
-    # TODO: Refactor
     def remove_duplicates(other_torrents)
       @torrents.delete_if do |torrent|
         other_torrents.each do |other_torrent|

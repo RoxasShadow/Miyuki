@@ -24,4 +24,7 @@ Gem::Specification.new do |s|
     when /darwin/ then s.add_dependency 'terminal-notifier', '~> 1.6'
     when /linux/  then s.add_dependency 'libnotify',         '~> 0.8'
   end
+
+  s.add_development_dependency 'cucumber', '~> 1.3'
+  s.add_development_dependency 'rspec', '~> 3.2'
 end
