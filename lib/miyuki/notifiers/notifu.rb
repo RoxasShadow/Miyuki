@@ -11,29 +11,12 @@
 #
 #  0. You just DO WHAT THE FUCK YOU WANT TO.
 ##
+require 'rb-notifu'
 
 module Miyuki
-  class Notifier
-    def initialize(notifier = nil)
-      @notifier = notifier || get_notifier
-    end
-
+  class Notifu
     def notify(title, message)
-      @notifier.notify(title, message) if has_notifier?
-    end
-
-    def has_notifier?
-      !!@notifier
-    end
-
-  private
-
-    def get_notifier
-      case RUBY_PLATFORM
-        when /darwin/ then Miyuki::TerminalNotifier.new
-        when /linux/  then Miyuki::Libnotify.new
-        when  /mswin|msys|mingw|cygwin/ then Miyuki::Notifu.new
-      end
+      ::Notifu.show(title: message, message: title, type: :info, time: 1)
     end
   end
 end

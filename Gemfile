@@ -6,6 +6,7 @@ gem 'yamazaki', '>= 0.3'
 gem 'foreverb'
 gem 'terminal-notifier'
 gem 'libnotify'
+gem 'rb-notifu'
 gem 'filewatcher'
 gem 'ruby_deep_clone'
 
