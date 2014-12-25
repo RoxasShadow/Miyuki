@@ -59,10 +59,9 @@ module Miyuki
       old_torrents = @tracker.torrents
 
       @tracker.refresh
-      @tracker.remove_duplicates(old_torrents)
+      @tracker.remove_duplicates_from(old_torrents)
 
-      new_torrents = @tracker.torrents
-      new_torrents.each { |new_torrent| notify_torrents(new_torrent) }
+      old_torrents.each { |new_torrent| notify_torrents(new_torrent) }
     end
 
     def load_config

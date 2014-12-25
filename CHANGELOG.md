@@ -1,3 +1,6 @@
+# 0.5.1
+- Fix bug that ignores already downloaded episodes
+
 # 0.5
 - Add episodes block in the configuration file to download range of episodes
 

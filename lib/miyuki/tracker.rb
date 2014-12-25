@@ -48,11 +48,9 @@ module Miyuki
       end
     end
 
-    def remove_duplicates(other_torrents)
-      @torrents.delete_if do |torrent|
-        other_torrents.each do |other_torrent|
-          return true if torrent.link == other_torrent.link
-        end
+    def remove_duplicates_from(other_torrents)
+      other_torrents.delete_if do |torrent|
+        @torrents.select { |other_torrent| torrent.link == other_torrent.link }.any?
       end
     end
 
