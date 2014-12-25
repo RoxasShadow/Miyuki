@@ -1,3 +1,6 @@
+# 0.5
+- Add episodes block in the configuration file to download range of episodes
+
 # 0.4
 - Add tests
 - Implement file-watcher for configuration file
