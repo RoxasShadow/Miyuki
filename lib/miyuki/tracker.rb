@@ -60,10 +60,12 @@ module Miyuki
       @series.each do |series|
         query = URI.encode_www_form_component(Parser.parse(series)) # TODO: move encode to yamazaki?
         torrents = search(query)
+        torrents.each { |torrent| torrent.title.gsub!(/_/, ' ') }
+
 
         episodes = series['episodes']
         if episodes && episodes['from']
-          Parser.filter_episodes!(torrents, episodes['from'], !!episodes['skipIfNotSure'])
+          Parser.filter_episodes!(torrents, episodes['from'], episodes['skipIfNotSure'] == true)
         end
 
         @torrents.concat(torrents.reverse)

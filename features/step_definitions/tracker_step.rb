@@ -59,6 +59,13 @@ And(/there are (\d+) torrent files? that do not contain "(.+)"/) do |count, stri
   expect(torrent_files.count).to be count.to_i
 end
 
+And(/there are some torrent files by "(.+)"/) do |fansub|
+  watch_dir = Miyuki.config['watchDir']
+  torrent_files = Dir["#{watch_dir}/*.torrent"].select { |f| f.include?("[#{fansub}]") }
+
+  expect(torrent_files.any?).to be_truthy
+end
+
 And(/I consider the currently downloaded torrent files/) do
   watch_dir = Miyuki.config['watchDir']
   @previous_torrent_files_ctime = Dir["#{watch_dir}/*.torrent"].map { |f| File.ctime(f) }
