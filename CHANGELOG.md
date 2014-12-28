@@ -1,3 +1,6 @@
+# 0.5.2
+- Add some other tests and fix skip parameter
+
 # 0.5.1
 - Fix bug that ignores already downloaded episodes
 
