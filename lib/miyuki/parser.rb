@@ -25,21 +25,21 @@ module Miyuki
         pattern
       end
 
-      def filter_episodes!(torrents, from_episode, skip = false)
+      def filter_episodes!(torrents, from_episode, keep = true)
         range = from_episode..1.0/0
 
         if range
           torrents.select! do |torrent|
-            return skip unless torrent.title
+            return keep unless torrent.title
 
             episode = torrent.title.scan(/- [0-9]*\.?[0-9]+/).last
             episode = episode.scan(/[0-9]*\.?[0-9]+/).last if episode
             episode = episode[1..-1] if episode && episode[0] == '0'
 
             if episode
-              is_integer?(episode) ? range.include?(episode.to_i) : skip
+              is_integer?(episode) ? range.include?(episode.to_i) : keep
             else
-              skip
+              keep
             end
           end
         end

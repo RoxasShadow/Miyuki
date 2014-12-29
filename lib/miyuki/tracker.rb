@@ -62,7 +62,6 @@ module Miyuki
         torrents = search(query)
         torrents.each { |torrent| torrent.title.gsub!(/_/, ' ') }
 
-
         episodes = series['episodes']
         if episodes && episodes['from']
           Parser.filter_episodes!(torrents, episodes['from'], episodes['skipIfNotSure'] == true)
