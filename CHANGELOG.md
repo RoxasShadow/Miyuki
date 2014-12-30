@@ -1,5 +1,7 @@
-# 0.5.3 — 0.5.4
-- Minor fixes and refactoring
+# 0.5.3 — 0.5.4 — 0.5.5
+- Refactoring of torrents fetching
+- Require the latest `filewatcher` gem
+- Minor fixes
 
 # 0.5.2
 - Add some other tests and fix skip parameter
