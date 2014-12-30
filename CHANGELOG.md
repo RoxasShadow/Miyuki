@@ -1,3 +1,6 @@
+# 0.5.3 — 0.5.4
+- Minor fixes and refactoring
+
 # 0.5.2
 - Add some other tests and fix skip parameter
 
