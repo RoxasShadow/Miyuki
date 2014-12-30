@@ -24,8 +24,6 @@ module Miyuki
 
       @series   = series || []
       @callback = callback if block_given?
-
-      refresh
     end
 
     def for_every_torrent(&callback)
@@ -36,21 +34,18 @@ module Miyuki
       end
     end
 
-    def refresh
+    def refresh!
+      old_torrents = @torrents || []
+
       @torrents = []
 
       fetch_torrents!
+      @torrents -= old_torrents
 
       @torrents.each do |torrent|
         downloaded = Yamazaki.download_torrent(torrent.title, torrent.link)
 
         @callback.call(torrent) if downloaded && @callback
-      end
-    end
-
-    def remove_duplicates_from(other_torrents)
-      other_torrents.delete_if do |torrent|
-        @torrents.select { |other_torrent| torrent.link == other_torrent.link }.any?
       end
     end
 

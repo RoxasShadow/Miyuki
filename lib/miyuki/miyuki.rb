@@ -39,7 +39,7 @@ module Miyuki
         notify_torrents(torrent)
       end
 
-      run_scheduler!
+      @tracker.refresh! && run_scheduler!
     end
 
   private
@@ -55,15 +55,6 @@ module Miyuki
       end
     end
 
-    def refresh_torrents
-      old_torrents = @tracker.torrents
-
-      @tracker.refresh
-      @tracker.remove_duplicates_from(old_torrents)
-
-      old_torrents.each { |new_torrent| notify_torrents(new_torrent) }
-    end
-
     def load_config
       YAML.load(File.read(@config_file))
     end
@@ -72,7 +63,7 @@ module Miyuki
       @scheduled_job.kill if @scheduled_job
 
       scheduler = Rufus::Scheduler.new
-      @scheduled_job = scheduler.schedule_every @config['refreshEvery'] { refresh_torrents }
+      @scheduled_job = scheduler.schedule_every @config['refreshEvery'] { @tracker.refresh! }
       scheduler.join if @join_scheduler != false
     end
 
