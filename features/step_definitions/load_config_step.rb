@@ -15,7 +15,7 @@ Then(/I expect no exception raised/) do
 end
 
 And(/^I modify something in "(.*?)"/) do |file|
-  @previous_config = Miyuki.config
+  @previous_config = DeepClone.clone(Miyuki.config)
 
   config = File.read(file)
 

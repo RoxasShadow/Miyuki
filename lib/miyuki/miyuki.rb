@@ -24,7 +24,7 @@ module Miyuki
       @config = load_config
 
       Thread.new do
-        FileWatcher.new([config_file]).watch { refresh_config }
+        FileWatcher.new(config_file).watch { refresh_config }
       end
     end
 
