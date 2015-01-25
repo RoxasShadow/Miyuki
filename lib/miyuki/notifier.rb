@@ -32,7 +32,7 @@ module Miyuki
       case RUBY_PLATFORM
         when /darwin/ then Miyuki::TerminalNotifier.new
         when /linux/  then Miyuki::Libnotify.new
-        when  /mswin|msys|mingw|cygwin/ then Miyuki::Notifu.new
+        when /mswin|msys|mingw|cygwin/ then Miyuki::Notifu.new
       end
     end
   end
