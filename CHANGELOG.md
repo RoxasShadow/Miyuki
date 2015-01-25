@@ -1,3 +1,6 @@
+# 0.5.6
+- Fix #4
+
 # 0.5.3 — 0.5.4 — 0.5.5
 - Refactoring of torrents fetching
 - Require the latest `filewatcher` gem
