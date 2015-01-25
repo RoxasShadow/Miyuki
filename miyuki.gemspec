@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   case RUBY_PLATFORM
     when /darwin/ then s.add_dependency 'terminal-notifier', '~> 1.6'
     when /linux/  then s.add_dependency 'libnotify',         '~> 0.8'
-    when /mswin|msys|mingw|cygwin/ then s.add_dependency 'libnotify', '~> 0.0'
+    when /mswin|msys|mingw|cygwin/ then s.add_dependency 'rb-notifu', '~> 0.0'
   end
 
   s.add_development_dependency 'cucumber', '~> 1.3'
