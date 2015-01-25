@@ -16,7 +16,7 @@ require 'rb-notifu'
 module Miyuki
   class Notifu
     def notify(title, message)
-      ::Notifu.show(title: message, message: title, type: :info, time: 1)
+      ::Notifu.show(title: message, message: title, type: :info, time: 3)
     end
   end
 end
