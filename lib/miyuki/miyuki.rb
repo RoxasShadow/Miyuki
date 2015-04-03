@@ -34,8 +34,10 @@ module Miyuki
       watch_dir = File.expand_path(@config['watchDir'])
       FileUtils.mkdir_p(watch_dir) unless Dir.exists?(watch_dir)
 
+      track_file = File.expand_path(@config['trackFile'])
+
       config = DeepClone.clone(@config)
-      @tracker = Tracker.new(watch_dir, config['series']) do |torrent|
+      @tracker = Tracker.new(watch_dir, track_file, config['series']) do |torrent|
         notify_torrents(torrent)
       end
 

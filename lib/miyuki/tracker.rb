@@ -18,9 +18,12 @@ module Miyuki
 
     attr_reader :torrents
 
-    def initialize(watch_dir, series, &callback)
-      # TODO: This will raise a warning when the class is initializated twice
+    def initialize(watch_dir, track_file, series, &callback)
+      Yamazaki.remove_const(:WATCH_DIR)
       Yamazaki.const_set(:WATCH_DIR, watch_dir)
+
+      Yamazaki.remove_const(:TRACK_FILE)
+      Yamazaki.const_set(:TRACK_FILE, track_file)
 
       @series   = series || []
       @callback = callback if block_given?
