@@ -1,3 +1,6 @@
+# 0.5.8.1
+- Make optional trackFile
+
 # 0.5.8
 - Implement trackFile for Yamazaki 0.3.4.
 
