@@ -13,9 +13,6 @@ Feature: Download new episodes
     And  I have the episode 9, 10 of "Mekakucity"
     And  there are 0 torrent files containing "Nisekoi 720p"
     And  there are some torrent files by "Commie"
-    And  I have the episodes 11, 12 of "Danna"
-    And  I have not the episode 10 of "Danna"
-    And  there are some torrent files by "Task-Force"
 
   Scenario: Episodes already downloaded are ignored
     When I set the configuration file path to "features/support/miyuki.conf"

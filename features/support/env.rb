@@ -15,7 +15,7 @@ After do |s|
   watch_dir = 'features/support/testWatchDir'
   FileUtils.rm_r(watch_dir) if Dir.exists?(watch_dir)
 
-  track_file = 'features/support/miyuki.db'
+  track_file = 'features/support/.miyuki.db'
   FileUtils.rm(track_file) if File.exists?(track_file)
 
   Cucumber.wants_to_quit = true if s.failed?

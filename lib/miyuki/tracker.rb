@@ -19,11 +19,13 @@ module Miyuki
     attr_reader :torrents
 
     def initialize(watch_dir, track_file, series, &callback)
-      Yamazaki.remove_const(:WATCH_DIR)
-      Yamazaki.const_set(:WATCH_DIR, watch_dir)
+      Yamazaki.class.instance_eval do # breaking the rules is so funny sometimes w
+        remove_const(:WATCH_DIR) if const_defined?(:WATCH_DIR)
+        const_set(:WATCH_DIR, watch_dir)
 
-      Yamazaki.remove_const(:TRACK_FILE)
-      Yamazaki.const_set(:TRACK_FILE, track_file)
+        remove_const(:TRACK_FILE) if const_defined?(:TRACK_FILE)
+        const_set(:TRACK_FILE, track_file)
+      end
 
       @series   = series || []
       @callback = callback if block_given?

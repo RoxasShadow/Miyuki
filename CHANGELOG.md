@@ -1,5 +1,5 @@
 # 0.5.8
-- Implement trackFile for Yamazaki 0.3.3
+- Implement trackFile for Yamazaki 0.3.4.
 
 # 0.5.6
 - Fix #4
