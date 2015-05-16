@@ -1,3 +1,8 @@
+# 0.5.8.2
+- Update foreverb
+- Drop support to mri 1.9.3
+- Add support to mri 2.2.1
+
 # 0.5.8.1
 - Make optional trackFile
 
