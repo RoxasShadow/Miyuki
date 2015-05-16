@@ -19,7 +19,12 @@ module Miyuki
     end
 
     def notify(title, message)
-      @notifier.notify(title, message) if has_notifier?
+      begin
+        @notifier.notify(title, message) if has_notifier?
+      rescue NoMethodError
+        #libnotify is not installed, maybe.
+        #someone may not want to install gnome on its server :V
+      end
     end
 
     def has_notifier?
