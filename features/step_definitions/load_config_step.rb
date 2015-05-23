@@ -43,9 +43,7 @@ And(/I modify track file in "(.*?)"/) do |file|
 end
 
 And(/Yamazaki creates the new track file/) do
-  expect {
-    File.open('features/support/changedtrackfile.db')
-  }.not_to raise_error 
+  expect(File.exists?('features/support/changedtrackfile.db')).to be_truthy
 end
 
 Then(/^Miyuki reloads her configuration/) do
