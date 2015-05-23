@@ -1,3 +1,6 @@
+# 0.5.9
+- Merge #7
+
 # 0.5.8.2
 - Update foreverb
 - Drop support to mri 1.9.3
