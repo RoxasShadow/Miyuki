@@ -18,5 +18,8 @@ After do |s|
   track_file = 'features/support/.miyuki.db'
   FileUtils.rm(track_file) if File.exists?(track_file)
 
+  secondary_track_file = 'features/support/changedtrackfile.db'
+  FileUtils.rm(secondary_track_file) if File.exists?(track_file)
+
   Cucumber.wants_to_quit = true if s.failed?
 end

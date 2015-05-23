@@ -27,6 +27,8 @@ module Miyuki
         const_set(:TRACK_FILE, track_file)
       end
 
+      Yamazaki.load_database
+
       @series   = series || []
       @callback = callback if block_given?
     end

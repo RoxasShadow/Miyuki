@@ -1,0 +1,13 @@
+diff --git a/features/support/miyuki.conf b/features/support/miyuki.conf
+index b307636..62e5588 100644
+--- a/features/support/miyuki.conf
++++ b/features/support/miyuki.conf
+@@ -2,7 +2,7 @@ watchDir:      "features/support/testWatchDir"
+ trackFile:     "features/support/.miyuki.db"
+ refreshEvery:  6s
+ notifications:
+-  enabled: true
++  enabled: false
+ 
+ series:
+   - name:     Mekakucity

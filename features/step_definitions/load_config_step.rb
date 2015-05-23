@@ -28,6 +28,24 @@ And(/^I modify something in "(.*?)"/) do |file|
   File.open(file, ?w) { |f| f.puts(config) }
 end
 
+And(/I modify track file in "(.*?)"/) do |file|
+  @previous_config = DeepClone.clone(Miyuki.config)
+
+  config = File.read(file)
+
+  if config.include?('changedtrackfile.db')
+    config.gsub!('changedtrackfile.db', '.miyuki.db')
+  elsif config.include?('.miyuki.db')
+    config.gsub!('.miyuki.db', 'changedtrackfile.db')
+  end
+
+  File.open(file, ?w) { |f| f.puts(config) }
+end
+
+And(/Yamazaki creates the new track file/) do
+  expect(File.exists?('features/support/changedtrackfile.db')).to be_truthy
+end
+
 Then(/^Miyuki reloads her configuration/) do
   expect(Miyuki.config).to_not be equal(@previous_config)
   expect(Miyuki.config['refreshEvery']).to_not be @previous_config['refreshEvery']
