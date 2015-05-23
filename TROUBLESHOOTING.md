@@ -1,12 +1,8 @@
-TROUBLESHOOTING (just in case)
-==============================
+TROUBLESHOOTING
+===============
 
-## I did not install `libnotify` and I get `NoMethodError` ##
-
-The easy fix is to disable notifications. 
-If you get this error while executing `rake` or `rake test`, you may
-want to `git apply features/support/turn_off_notifications.patch`
-in order to automatize the process on the tests' configurations.
-If you don't want to turn them off, either install `libnotify`
-or wrap `@notifier.notify(title, message) if has_notifier?` line
-inside `lib/miyuki/notifier.rb` inside a `begin ... rescue` block.
+`NoMethodError` when running tests
+----------------------------------
+This *probably* means that you're under Linux or OSX and you have neither `libnotify` and `notifu`, respectively.
+So, in order to make tests pass correctly, you may want to run `git apply features/support/turn_off_notifications.patch` in order to disable notificationss.
+Otherwise, just install one of those two libraries and enjoy your life.
