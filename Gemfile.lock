@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/alfateam123/yamazaki.git
+  revision: 730e36488b5ed239bc10b7fc7d39e080cb4f7f71
+  branch: track-file-not-updated
+  specs:
+    yamazaki (0.3.5)
+      colorb (~> 0)
+      oj (~> 2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -26,7 +35,7 @@ GEM
       ffi (>= 1.0.11)
     multi_json (1.10.1)
     multi_test (0.1.1)
-    oj (2.12.1)
+    oj (2.12.8)
     rake (10.4.2)
     rb-notifu (0.0.4)
     rspec (3.1.0)
@@ -50,9 +59,6 @@ GEM
     trollop (2.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    yamazaki (0.3.4)
-      colorb (~> 0)
-      oj (~> 2.1)
 
 PLATFORMS
   ruby
@@ -69,4 +75,4 @@ DEPENDENCIES
   ruby_deep_clone
   rufus-scheduler
   terminal-notifier
-  yamazaki (>= 0.3.4)
+  yamazaki (>= 0.3.5)!
