@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rake'
 gem 'rufus-scheduler'
-gem 'yamazaki', '>= 0.3.5', :git => 'git://github.com/alfateam123/yamazaki.git', :branch => 'track-file-not-updated'
+gem 'yamazaki', '>= 0.3.5'
 gem 'foreverb', '>= 0.3.3'
 gem 'terminal-notifier'
 gem 'libnotify'
