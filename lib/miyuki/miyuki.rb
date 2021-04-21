@@ -24,7 +24,7 @@ module Miyuki
       @config = load_config
 
       Thread.new do
-        FileWatcher.new(config_file).watch { refresh_config }
+        Filewatcher.new(config_file).watch { refresh_config }
       end
     end
 
@@ -65,7 +65,7 @@ module Miyuki
       @scheduled_job.kill if @scheduled_job
 
       scheduler = Rufus::Scheduler.new
-      @scheduled_job = scheduler.schedule_every @config['refreshEvery'] { @tracker.refresh! }
+      @scheduled_job = scheduler.schedule_every(@config['refreshEvery']) { @tracker.refresh! }
       scheduler.join if @join_scheduler != false
     end
 

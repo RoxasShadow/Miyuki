@@ -12,6 +12,8 @@
 #  0. You just DO WHAT THE FUCK YOU WANT TO.
 ##
 
+ENV['TZ'] ||= 'Europe/London'
+
 require 'fileutils'
 require 'yaml'
 require 'rufus-scheduler'

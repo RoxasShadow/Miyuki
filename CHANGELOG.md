@@ -1,3 +1,6 @@
+# 0.5.10
+- Update gems to 2021
+
 # 0.5.9
 - Merge #7
 
